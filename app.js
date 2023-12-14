@@ -2,16 +2,24 @@ import express from 'express';
 import { config } from 'dotenv';
 import ErrorMiddlerware from './middlewares/Error.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 config({
     path: './config/config.env',
 });
 const app = express();
 
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200
+}
+
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
+app.use(cors(corsOptions));
 
 // importing and using routes
 import course from './routes/courseRoutes.js';
